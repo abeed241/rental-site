@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CarGo | Rent Cars Online</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    nav {
+      background: #222;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Dropdown Menu */
+    .dropdown-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 65px;
+      right: 2rem;
+      background-color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 9;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 150px;
+    }
+
+    .dropdown-menu li {
+      list-style: none;
+    }
+
+    .dropdown-menu li a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #444;
+    }
+
+    .dropdown-menu li a:hover {
+      background-color: #444;
+    }
+
+    .dropdown-menu.active {
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      nav .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    header {
+      background: url(https://rev-ai.io/wp-content/uploads/2022/03/Transaction-Tracking-and-Analytics-Steering-Car-Rental-banner.webp) no-repeat center center/cover;
+      height: 60vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .car-listing {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .car {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .car img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .car h3 {
+      margin: 0.5rem 0;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #007BFF;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    /* Chatbot UI */
+    .chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999;
+    }
+
+    .chatbot-header {
+      background: #007BFF;
+      color: white;
+      padding: 0.7rem;
+      text-align: center;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chatbot-header .close-chat {
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+    }
+
+    .chatbot-messages {
+      height: 200px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .chatbot-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      border: none;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .chatbot-input button {
+      border: none;
+      padding: 0.5rem 1rem;
+      background: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .chatbot {
+        width: 90%;
+        right: 5%;
+      }
+
+      header h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">CarGo</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Cars</a></li>
+      <li><a href="#">Book</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#" id="chatbot-toggle-desktop">Chatbot</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <ul id="mobileMenu" class="dropdown-menu">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Cars</a></li>
+    <li><a href="#">Book</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#" id="chatbot-toggle-mobile">Chatbot</a></li>
+  </ul>
+
+  <header>
+    <h1>Drive Your Way</h1>
+    <p>Rent the perfect car for your next trip. Safe. Affordable. Reliable.</p>
+  </header>
+
+  <div class="container">
+    <h2>Available Cars</h2>
+    <div class="car-listing">
+      <div class="car">
+        <img src="https://source.unsplash.com/featured/?car" alt="Sedan">
+        <h3>Sedan X1</h3>
+        <p>₹2500/day · AC · Automatic</p>
+        <a href="booking.html" class="btn">Book Now</a>
+      </div>
+      <div class="car">
+        <img src="https://source.unsplash.com/featured/?suv" alt="SUV">
+        <h3>SUV Falcon</h3>
+        <p>₹3500/day · AC · Manual</p>
+        <a href="booking.html" class="btn">Book Now</a>
+      </div>
+      <div class="car">
+        <img src="https://source.unsplash.com/featured/?luxury-car" alt="Luxury">
+        <h3>Luxury X</h3>
+        <p>₹5000/day · AC · Automatic</p>
+        <a href="booking.html" class="btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot UI -->
+  <div class="chatbot" id="chatbot">
+    <div class="chatbot-header">
+      <span>AI Chat Support</span>
+      <span class="close-chat" onclick="toggleChat()">×</span>
+    </div>
+    <div class="chatbot-messages" id="chat-messages">
+      <div><strong>Bot:</strong> Hello! Need help with booking?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="user-input" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // Toggle mobile menu
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("active");
+    }
+
+    // Toggle chatbot visibility
+    function toggleChat() {
+      const chatbot = document.getElementById("chatbot");
+      chatbot.style.display = chatbot.style.display === "none" || chatbot.style.display === "" ? "flex" : "none";
+    }
+
+    // Send message in chatbot
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const messages = document.getElementById("chat-messages");
+      messages.innerHTML += `<div><strong>You:</strong> ${msg}</div>`;
+      input.value = "";
+
+      setTimeout(() => {
+        messages.innerHTML += `<div><strong>Bot:</strong> I'm just a demo! Real AI coming soon. 🚗</div>`;
+        messages.scrollTop = messages.scrollHeight;
+      }, 600);
+    }
+
+    // Chatbot toggles
+    document.getElementById("chatbot-toggle-desktop")?.addEventListener("click", function(e) {
+      e.preventDefault();
+      toggleChat();
+    });
+
+    document.getElementById("chatbot-toggle-mobile")?.addEventListener("click", function(e) {
+      e.preventDefault();
+      toggleChat();
+    });
+
+    // Auto-hide mobile menu on desktop resize
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        document.getElementById("mobileMenu").classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>
