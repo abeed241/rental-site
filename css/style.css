@@ -102,7 +102,7 @@ nav .nav-links li a {
     /* Corrected background */
     background-image: 
     linear-gradient(rgba(0, 0, 0, 0.674), rgba(0, 0, 0, 0.541)), /* overlay */
-    url("/assests/rental\ background\ image.webp") ;
+    url("../assests/rental\ background\ image.webp") ;
     background-repeat: no-repeat;
     background-position: right center;
     /* aligns image to the right */
