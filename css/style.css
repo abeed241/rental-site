@@ -100,20 +100,23 @@ nav .nav-links li a {
     background-color: #fff;
 
     /* Corrected background */
-    background-image: url("../assests/rental background image.webp");
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.674), rgba(0, 0, 0, 0.541)), /* overlay */
+    url("/assests/rental\ background\ image.webp") ;
     background-repeat: no-repeat;
     background-position: right center;
     /* aligns image to the right */
     background-size: contain;
     /* makes image responsive */
 
-    color: #0f0b0b;
+    color: #fff;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
 
 }
+
 
 .slide {
     position: absolute;
