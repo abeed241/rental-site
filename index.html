@@ -9,23 +9,53 @@
 </head>
 
 <body>
-
-  <nav>
+  <nav class="navbar">
     <div class="logo">CarGo</div>
     <ul class="nav-links">
       <li><a href="#">Home</a></li>
-      <li><a href="#">Cars</a></li>
-      <li><a href="#">Book</a></li>
+      <li><a href="#available-cars">Cars</a></li>
+      <li><a href="#available-cars">Book</a></li>
       <li><a href="#">Contact</a></li>
       <li><a href="#" id="chatbot-toggle-desktop">Chatbot</a></li>
     </ul>
     <div class="hamburger" id = "hamburger"onclick="toggleMenu()">☰</div>
   </nav>
+<!-- Chatbot FAB -->
+<button id="chatbot-button" aria-label="Open chat"
+  style="
+    position: fixed; right: 20px; bottom: 20px;
+    width: 56px; height: 56px; border: none; border-radius: 50%;
+    background:#007BFF; color:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    transition: transform .15s ease, box-shadow .15s ease;
+    z-index: 1000;
+  "
+  onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 28px rgba(0,0,0,.22)'"
+  onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 24px rgba(0,0,0,.18)'">
+  <!-- AI Chatbot SVG Icon -->
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <!-- chat bubble -->
+    <path d="M4 5.5C4 4.12 5.12 3 6.5 3h11C18.88 3 20 4.12 20 5.5v7c0 1.38-1.12 2.5-2.5 2.5H11l-3.5 3v-3H6.5A2.5 2.5 0 0 1 4 12.5v-7Z"
+          fill="white" opacity=".22"/>
+    <!-- robot head -->
+    <rect x="6.8" y="6.2" width="10.4" height="7" rx="2" fill="white"/>
+    <!-- eyes -->
+    <circle cx="10" cy="9.7" r="0.9" fill="#007BFF"/>
+    <circle cx="14" cy="9.7" r="0.9" fill="#007BFF"/>
+    <!-- antenna -->
+    <line x1="12" y1="5" x2="12" y2="6.2" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="12" cy="4" r="1" fill="white"/>
+    <!-- sparkles (AI vibe) -->
+    <path d="M19.2 6.2l.6-1.4.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6Z"
+          fill="white" opacity=".9"/>
+  </svg>
+</button>
 
   <ul id="mobileMenu" class="dropdown-menu">
     <li><a href="#">Home</a></li>
-    <li><a href="#">Cars</a></li>
-    <li><a href="#">Book</a></li>
+    <li><a href="#available-cars">Cars</a></li>
+    <li><a href="#available-cars">Book</a></li>
     <li><a href="#">Contact</a></li>
     <li><a href="#" id="chatbot-toggle-mobile">Chatbot</a></li>
   </ul>

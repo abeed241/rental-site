@@ -1,3 +1,6 @@
+// --------------------
+// Hero Slider
+// --------------------
 const slides = document.querySelectorAll('.hero-slider .slide');
 let current = 0;
 
@@ -6,35 +9,65 @@ function showNextSlide() {
     current = (current + 1) % slides.length;
     slides[current].classList.add('active');
 }
-
 setInterval(showNextSlide, 5000); // slides every 5 seconds
 
-
-
+// --------------------
 // Toggle mobile menu
-const hamburger = document.getElementById("hamburger")
+// --------------------
+const hamburger = document.getElementById("hamburger");
+const mobileMenu = document.getElementById("mobileMenu");
+
 function toggleMenu() {
-  mobileMenu.classList.toggle("active");
+    mobileMenu.classList.toggle("active");
 
-  // Change icon
-  if (mobileMenu.classList.contains("active")) {
-    hamburger.textContent = "×";
-  } else {
-    hamburger.textContent = "☰";
-  }
+    // Change icon
+    hamburger.textContent = mobileMenu.classList.contains("active") ? "×" : "☰";
 }
 
+// Close mobile menu when clicking any link
+document.querySelectorAll("#mobileMenu a").forEach(link => {
+    link.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        hamburger.textContent = "☰";
+    });
+});
+
+// --------------------
 // Toggle chatbot visibility
+// --------------------
+const chatbotButton = document.getElementById("chatbot-button");
+const chatbot = document.getElementById("chatbot");
+
 function toggleChat() {
-    const chatbot = document.getElementById("chatbot");
-    chatbot.style.display = chatbot.style.display === "none" || chatbot.style.display === "" ? "flex" : "none";
+    const isChatVisible = chatbot.style.display === "flex";
+
+    // Show or hide chatbot
+    chatbot.style.display = isChatVisible ? "none" : "flex";
+
+    // Hide chatbot button when chat is open
+    chatbotButton.style.display = isChatVisible ? "flex" : "none";
+
+    // If mobile menu is open, close it
     if (mobileMenu.classList.contains("active")) {
-  mobileMenu.classList.remove("active");
-  hamburger.textContent = "☰";
-}
+        mobileMenu.classList.remove("active");
+        hamburger.textContent = "☰";
+    }
 }
 
+// Event listeners for chatbot open/close
+chatbotButton.addEventListener("click", toggleChat);
+document.getElementById("chatbot-toggle-desktop").addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleChat();
+});
+document.getElementById("chatbot-toggle-mobile").addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleChat();
+});
+
+// --------------------
 // Send message in chatbot
+// --------------------
 function sendMessage() {
     const input = document.getElementById("user-input");
     const msg = input.value.trim();
@@ -50,20 +83,12 @@ function sendMessage() {
     }, 600);
 }
 
-// Chatbot toggles
-document.getElementById("chatbot-toggle-desktop")?.addEventListener("click", function (e) {
-    e.preventDefault();
-    toggleChat();
-});
-
-document.getElementById("chatbot-toggle-mobile")?.addEventListener("click", function (e) {
-    e.preventDefault();
-    toggleChat();
-});
-
+// --------------------
 // Auto-hide mobile menu on desktop resize
+// --------------------
 window.addEventListener("resize", () => {
     if (window.innerWidth > 768) {
-        document.getElementById("mobileMenu").classList.remove("active");
+        mobileMenu.classList.remove("active");
+        hamburger.textContent = "☰";
     }
 });
